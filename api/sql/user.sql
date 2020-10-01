@@ -1,0 +1,5 @@
+INSERT INTO public."user" (id, "firstName", "lastName", email, password, phone, "isAdmin") VALUES (1, 'Owen', 'Elliott', 'urmom@example.com', 'urmom', '5551234567', true);
+INSERT INTO public."user" (id, "firstName", "lastName", email, password, phone, "isAdmin") VALUES (3, 'Josh', 'Walgren', 'jjboy@jman.net', 'passcode', '9119119911', false);
+INSERT INTO public."user" (id, "firstName", "lastName", email, password, phone, "isAdmin") VALUES (4, 'Dan', 'Yull', 'dannyboy@g.mail', 'secure', '0123456789', false);
+INSERT INTO public."user" (id, "firstName", "lastName", email, password, phone, "isAdmin") VALUES (5, 'Dia', 'Beeties', 'g@gmail.com', 'littlekidlover', '486153729', false);
+INSERT INTO public."user" (id, "firstName", "lastName", email, password, phone, "isAdmin") VALUES (2, 'Ben', 'Thompson', 'urdad@email.com', 'word', '548645123', false);

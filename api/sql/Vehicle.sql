@@ -1,0 +1,3 @@
+INSERT INTO public."Vehicle" (id, make, model, color, "vehicleTypeId", capacity, mpg, "licenseState", "licensePlate") VALUES (1, 'Ford', 'Focus', 'White', 1, 5, 20, 'WA', 'A45-2453-1311');
+INSERT INTO public."Vehicle" (id, make, model, color, "vehicleTypeId", capacity, mpg, "licenseState", "licensePlate") VALUES (2, 'Toyota', 'Corolla', 'Gray', 1, 5, 23.2, 'WA', 'Async Await');
+INSERT INTO public."Vehicle" (id, make, model, color, "vehicleTypeId", capacity, mpg, "licenseState", "licensePlate") VALUES (3, 'Chevy', 'Tahoe', 'Orange', 2, 5, 14.7, 'WI', 'getta grip');

@@ -1,0 +1,4 @@
+INSERT INTO public."Ride" (id, date, time, distance, "fuelPrice", fee, "vehicleId", "fromLocationId", "toLocationId") VALUES (1, '2020-09-30', '2020-09-30 15:55:25.000000', 250.2, 1.99, 5.99, 1, 1, 2);
+INSERT INTO public."Ride" (id, date, time, distance, "fuelPrice", fee, "vehicleId", "fromLocationId", "toLocationId") VALUES (2, '2008-11-11', '2008-11-11 15:34:32.000000', 32.5, 2.19, 15.02, 1, 1, 2);
+INSERT INTO public."Ride" (id, date, time, distance, "fuelPrice", fee, "vehicleId", "fromLocationId", "toLocationId") VALUES (3, '2020-09-29', '2020-09-29 13:28:14.000000', 20.1, 2.11, 10.9, 2, 2, 3);
+INSERT INTO public."Ride" (id, date, time, distance, "fuelPrice", fee, "vehicleId", "fromLocationId", "toLocationId") VALUES (4, '2018-12-25', '2018-12-25 00:00:01.000000', 32.5, 2.32, 18.34, 3, 2, 1);
