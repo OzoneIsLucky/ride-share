@@ -4,7 +4,7 @@ CREATE TABLE "user"
     "firstName" varchar(40) NOT NULL,
     "lastName"  varchar(40) NOT NULL,
     email       varchar(40) NOT NULL,
-    password    varchar(40) NOT NULL,
+    password    varchar NOT NULL,
     phone       varchar(40),
     "isAdmin"   boolean DEFAULT FALSE,
     CONSTRAINT user_pk
