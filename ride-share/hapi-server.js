@@ -146,7 +146,7 @@ async function init() {
         return User.query()
           .findById(request.params.id)
           .patch({
-            password: await hash(request.params.password, SALT_ROUNDS),
+            password: request.params.password,
           });
       },
     },
