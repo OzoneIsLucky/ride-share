@@ -150,7 +150,16 @@ async function init() {
           });
       },
     },
-
+    {
+      method: "GET",
+      path: "/rides",
+      config: {
+        description: "Retrieve all rides",
+      },
+      handler: (request, h) => {
+        return Ride.query();
+      },
+    },
     {
       method: "POST",
       path: "/login",
