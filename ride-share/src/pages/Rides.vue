@@ -1,23 +1,29 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Accounts</h4>
+      <h4 class="display-1">Rides</h4>
 
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers"
-        v-bind:items="accounts"
+        v-bind:items="rides"
       >
         <template v-slot:item="{ item }">
           <tr v-bind:class="itemClass(item)">
-            <td>{{ item.email }}</td>
-            <td>{{ item.firstName }}</td>
-            <td>{{ item.lastName }}</td>
+            <td>{{ item.date }}</td>
+            <td>{{ item.time }}</td>
+            <td>{{ item.distance }}</td>
+            <td>{{ item.fuelPrice }}</td>
+            <td>{{ item.fee }}</td>
+            <td>{{ item.vehicleId }}</td>
+            <td>{{ item.fromLocationId }}</td>
+            <td>{{ item.toLocationId }}</td>
+            
             <td>
-              <v-icon small @click="deleteAccount(item)">
+              <v-icon small @click="deleteRide(item)">
                 mdi-delete
               </v-icon>
-              <v-icon small class="ml-2" @click="updateAccount(item)">
+              <v-icon small class="ml-2" @click="joinRide(item)">
                 mdi-pencil
               </v-icon>
             </td>
@@ -37,17 +43,22 @@
 
 <script>
 export default {
-  name: "Accounts",
+  name: "Rides",
 
   data: function() {
     return {
       headers: [
-        { text: "Email", value: "email" },
-        { text: "First", value: "firstName" },
-        { text: "Last", value: "lastName" },
+        { text: "Date", value: "date" },
+        { text: "Time", value: "time" },
+        { text: "Distance", value: "distance" },
+        { text: "Fuel Price", value: "fuelPrice" },
+        { text: "Fee", value: "fee" },
+        { text: "Vehicle", value: "vehicleId" },
+        { text: "From", value: "fromLocationId" },
+        { text: "To", value: "toLocationId" },
         { text: "Action", value: "action" }
       ],
-      accounts: [],
+      rides: [],
 
       snackbar: {
         show: false,
@@ -57,12 +68,16 @@ export default {
   },
 
   mounted: function() {
-    this.$axios.get("/accounts").then(response => {
-      this.accounts = response.data.map(account => ({
-        id: account.id,
-        email: account.email,
-        firstName: account.first_name,
-        lastName: account.last_name
+    this.$axios.get("/rides").then(response => {
+      this.rides = response.data.map(ride => ({
+        date: ride.date,
+        time: ride.time,
+        distance: ride.distance,
+        fuelPrice: ride.fuelPrice,
+        fee: ride.fee,
+        vehicleId: ride.vehicleId,
+        fromLocationId: ride.fromLocationId,
+        toLocationId: ride.toLocationId,
       }));
     });
   },
@@ -76,26 +91,29 @@ export default {
 
     // Calculate the CSS class for an item
     itemClass(item) {
-      const currentAccount = this.$store.state.currentAccount;
-      if (currentAccount && currentAccount.id === item.id) {
-        return "currentAccount";
-      }
+      //pass
     },
 
-    // Update account information.
-    updateAccount(item) {
-      console.log("UPDATE", JSON.stringify(item, null, 2));
-      this.showSnackbar("Sorry, update is not yet implemented.");
+    joinRide(item) {
+      this.$axios.patch(`/rides/${item.id}`).then(response => {
+        if (response.data.ok) {
+          // The delete operation worked on the server; delete the local account
+          // by filtering the deleted account from the list of rides.
+          this.rides = this.rides.filter(
+            account => account.id !== item.id
+          );
+        }
+      });
     },
 
     // Delete an account.
-    deleteAccount(item) {
-      this.$axios.delete(`/accounts/${item.id}`).then(response => {
+    deleteRide(item) {
+      this.$axios.delete(`/rides/${item.id}`).then(response => {
         if (response.data.ok) {
           // The delete operation worked on the server; delete the local account
-          // by filtering the deleted account from the list of accounts.
-          this.accounts = this.accounts.filter(
-            account => account.id !== item.id
+          // by filtering the deleted account from the list of rides.
+          this.rides = this.rides.filter(
+            ride => ride.id !== item.id
           );
         }
       });
@@ -105,7 +123,7 @@ export default {
 </script>
 
 <style>
-.currentAccount {
-  background: lightcoral;
+.currentRide {
+  background: rgb(226, 197, 197);
 }
 </style>

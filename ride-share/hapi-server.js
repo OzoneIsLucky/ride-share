@@ -136,6 +136,7 @@ async function init() {
           });
       },
     },
+
     {
       method: "PATCH",
       path: "/accounts/{id}",
@@ -150,6 +151,7 @@ async function init() {
           });
       },
     },
+
     {
       method: "GET",
       path: "/rides",
@@ -160,6 +162,30 @@ async function init() {
         return Ride.query();
       },
     },
+
+    {
+      method: "DELETE",
+      path: "/rides/{id}",
+      config: {
+        description: "Delete a ride",
+      },
+      handler: async (request) => {
+        const rowsDeleted = await Ride.query()
+          .deleteById(request.params.id);
+        if (rowsDeleted === 1) {
+          return {
+            ok: true,
+            msge: `Deleted ride with ID '${request.params.id}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't delete ride with ID '${request.params.id}'`,
+          };
+        }
+      },
+    },
+    
     {
       method: "POST",
       path: "/login",
