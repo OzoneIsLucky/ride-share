@@ -32,6 +32,12 @@
         <v-list-item v-bind:to="{ name: 'rides' }">
           <v-list-item-title>Rides</v-list-item-title>
         </v-list-item>
+        <v-list-item v-bind:to="{ name: 'drivers' }">
+          <v-list-item-title>Drivers</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-bind:to="{ name: 'become-driver' }">
+          <v-list-item-title>Become Driver</v-list-item-title>
+        </v-list-item>
         <v-list-item v-bind:to="{ name: 'reset-password' }">
           <v-list-item-title>Reset Password</v-list-item-title>
         </v-list-item>

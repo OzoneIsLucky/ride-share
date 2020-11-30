@@ -172,6 +172,17 @@ async function init() {
     },
 
     {
+      method: "GET",
+      path: "/ride/{id}",
+      config: {
+        description: "Get one ride",
+      },
+      handler: (request, h) => {
+        return Ride.query().findById(request.params.id);
+      },
+    },
+
+    {
       method: "POST",
       path: "/rides/{id}",
       config: {
@@ -219,6 +230,17 @@ async function init() {
         }
       },
     },
+
+    {
+      method: "GET",
+      path: "/passengers",
+      config: {
+        description: "Get all passengers",
+      },
+      handler: (request, h) => {
+        return Passenger.query();
+      },
+    },
     
     {
       method: "POST",
@@ -258,6 +280,60 @@ async function init() {
           return {
             ok: false,
             msge: "Invalid email or password",
+          };
+        }
+      },
+    },
+
+    {
+      method: "POST",
+      path: "/driver",
+      config: {
+        description: "Create a Driver",
+      },
+      handler: async (request, h) => {
+        const newDriver = await Driver.query().insert({
+          userId: request.payload.userId,
+          licenseNumber: request.payload.licenseNumber,
+          licenseState: request.payload.licenseState,
+        })
+
+        if (newDriver) {
+          return {
+            ok: true,
+            msge: `Congradulations!`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create driver with id '${request.payload.userId}'`,
+          };
+        }
+      },
+    },
+
+    {
+      method: "POST",
+      path: "/vehicle",
+      config: {
+        description: "Create a Vehicle",
+      },
+      handler: async (request, h) => {
+        const newVehicle = await Vehicle.query().insert({
+          userId: request.payload.userId,
+          licenseNumber: request.payload.licenseNumber,
+          licenseState: request.payload.licenseState,
+        })
+
+        if (newDriver) {
+          return {
+            ok: true,
+            msge: `Congratulations!`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create driver with id '${request.payload.userId}'`,
           };
         }
       },
