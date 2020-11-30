@@ -26,6 +26,9 @@ class Authorization extends Model {
       },
     };
   }
+  static get idColumn() {
+    return ["driverId", "vehicleId"];
+  }
 }
 
 module.exports = Authorization;

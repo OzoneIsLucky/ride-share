@@ -32,7 +32,7 @@ class Driver extends Model {
         modelClass: User,
         join: {
           from: "Driver.userId",
-          to: "User.id",
+          to: "user.id",
         },
       },
       State: {
@@ -47,4 +47,4 @@ class Driver extends Model {
   }
 }
 
-module.export = Driver;
+module.exports = Driver;

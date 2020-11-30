@@ -23,8 +23,8 @@
               <v-icon small @click="deleteRide(item)">
                 mdi-delete
               </v-icon>
-              <v-icon small class="ml-2" @click="joinRide(item)">
-                mdi-pencil
+              <v-icon small class="ml-2" @click="goToRide(item)">
+                mdi-eye
               </v-icon>
             </td>
           </tr>
@@ -94,6 +94,10 @@ export default {
     // Calculate the CSS class for an item
     itemClass() {
       //pass
+    },
+
+    goToRide(item) {
+      this.$router.push({ name: "ride", query: { id: `${item.id}` } });
     },
 
     joinRide(item) {

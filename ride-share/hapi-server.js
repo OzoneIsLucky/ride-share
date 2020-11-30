@@ -292,7 +292,7 @@ async function init() {
         description: "Create a Driver with a Vehicle",
       },
       handler: async (request, h) => {
-        const type = await Vehicle_Type.query()
+        const type = await VehicleType.query()
           .where('type', request.payload.type)
 
         if(!type) {
@@ -302,15 +302,11 @@ async function init() {
           };
         }
 
+        
         const newDriver = await Driver.query().insert({
           userId: request.payload.userId,
           licenseNumber: request.payload.licenseNumber,
           licenseState: request.payload.licenseState,
-        })
-        const id = await Authorization.query().max('driverId')
-        const authorize = await Authorization.query().insert({
-          driverId: id + 1,
-          vehicleId: id + 1,
         })
         const newVehicle = await Vehicle.query().insert({
           make: request.payload.make,
@@ -321,6 +317,11 @@ async function init() {
           mpg: request.payload.mpg,
           licenseState: request.payload.licenseState,
           licensePlate: request.payload.licensePlate,
+        })
+        const num = await Authorization.query().resultSize()
+        const authorize = await Authorization.query().insert({
+          driverId: num + 1,
+          vehicleId: num + 1,
         })
 
         if (newVehicle) {

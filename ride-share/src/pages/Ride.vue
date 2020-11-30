@@ -29,11 +29,13 @@
       >
       <template v-slot:item="{ item }">
         <tr v-bind:class="itemClass(item)">
-          <td>{{ item.passengerId }}</td>
+          <td>{{ item.firstName }}</td>
 
         </tr>
       </template>
       </v-data-table>
+      <br>
+      <v-btn v-on:click="joinRide">Join Ride</v-btn>
       
 
       <v-snackbar v-model="snackbar.show">
@@ -99,7 +101,7 @@ export default {
       this.passengers = response.data.map(passenger => ({
         passengerId: passenger.passengerId,
         rideId: passenger.rideId,
-        //firstName: passenger.User.firstName,
+        firstName: passenger.User.firstName,
       }));
 
       this.passengers = this.passengers.filter(
@@ -120,10 +122,10 @@ export default {
       //pass
     },
 
-    joinRide(item) {
+    joinRide() {
 
       this.$axios
-        .post(`/rides/${item.id}`, {
+        .post(`/rides/${this.$route.query.id}`, {
           userId: this.$store.state.currentAccount.id
         })
         .then((result) => {
@@ -131,7 +133,7 @@ export default {
           // appropriate dialog.
           if (result.data.ok) {
             this.showDialog("Success", result.data.msge);
-            this.accountCreated = true;
+            
           } else {
             this.showDialog("Sorry", result.data.msge);
           }

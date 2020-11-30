@@ -26,7 +26,7 @@ class Passenger extends Model {
         modelClass: User,
         join: {
           from: "Passenger.passengerId",
-          to: "User.id",
+          to: "user.id",
         },
       },
     };
