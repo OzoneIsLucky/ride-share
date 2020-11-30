@@ -21,7 +21,7 @@
           </tr>
         </template>
       </v-data-table>
-      <v-spacer></v-spacer>
+      <br>
       <v-data-table
         class="elevation-1"
         v-bind:headers="headers2"
@@ -29,7 +29,7 @@
       >
       <template v-slot:item="{ item }">
         <tr v-bind:class="itemClass(item)">
-          <td>{{ item.firstName }}</td>
+          <td>{{ item.passengerId }}</td>
 
         </tr>
       </template>
@@ -99,7 +99,7 @@ export default {
       this.passengers = response.data.map(passenger => ({
         passengerId: passenger.passengerId,
         rideId: passenger.rideId,
-        firstName: passenger.User.firstName,
+        //firstName: passenger.User.firstName,
       }));
 
       this.passengers = this.passengers.filter(

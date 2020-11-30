@@ -4,6 +4,11 @@ class Drivers extends Model {
   static get tableName() {
     return "Drivers";
   }
+
+  static get idColumn() {
+    return ["passengerId", "rideId"];
+  }
+  
   static get relationMappings() {
     const Driver = require("./Driver.js");
     const Ride = require("./Ride.js");

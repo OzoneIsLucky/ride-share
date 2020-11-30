@@ -238,7 +238,7 @@ async function init() {
         description: "Get all passengers",
       },
       handler: (request, h) => {
-        return Passenger.query().withGraphFetched('User');
+        return Passenger.query();
       },
     },
     
@@ -289,66 +289,49 @@ async function init() {
       method: "POST",
       path: "/driver",
       config: {
-        description: "Create a Driver",
+        description: "Create a Driver with a Vehicle",
       },
       handler: async (request, h) => {
-        const newDriver = await Driver.query().insert({
-          userId: request.payload.userId,
-          licenseNumber: request.payload.licenseNumber,
-          licenseState: request.payload.licenseState,
-        })
-
-        if (newDriver) {
-          return {
-            ok: true,
-            msge: `Congradulations! Driver created for user with id '${request.payload.userId}'`,
-          };
-        } else {
-          return {
-            ok: false,
-            msge: `Couldn't create driver with id '${request.payload.userId}'`,
-          };
-        }
-      },
-    },
-
-    {
-      method: "POST",
-      path: "/vehicle",
-      config: {
-        description: "Create a Vehicle",
-      },
-      handler: async (request, h) => {
-        const typeExists = await Vehicle_Type.query()
+        const type = await Vehicle_Type.query()
           .where('type', request.payload.type)
 
-        if(!typeExists) {
+        if(!type) {
           return {
             ok: false,
             msge: `Vehicle type not accepted`,
           };
         }
 
+        const newDriver = await Driver.query().insert({
+          userId: request.payload.userId,
+          licenseNumber: request.payload.licenseNumber,
+          licenseState: request.payload.licenseState,
+        })
         const id = await Authorization.query().max('driverId')
         const authorize = await Authorization.query().insert({
           driverId: id + 1,
           vehicleId: id + 1,
         })
         const newVehicle = await Vehicle.query().insert({
-          vehicleTypeId: request.payload.userId,
-          licenseNumber: request.payload.licenseNumber,
+          make: request.payload.make,
+          model: request.payload.model,
+          color: request.payload.color,
+          vehicleTypeId: type.id,
+          capacity: request.payload.capacity,
+          mpg: request.payload.mpg,
           licenseState: request.payload.licenseState,
+          licensePlate: request.payload.licensePlate,
         })
 
         if (newVehicle) {
           return {
             ok: true,
-            msge: `Congratulations! Vehicle created for user with id '${request.payload.userId}'`,
+            msge: `Congratulations! Driver and Vehicle created for user with id '${request.payload.userId}'`,
           };
         } else {
           return {
             ok: false,
-            msge: `Couldn't create driver with id '${request.payload.userId}'`,
+            msge: `Couldn't create Vehicle and Driver with id '${request.payload.userId}'`,
           };
         }
       },

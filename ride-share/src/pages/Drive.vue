@@ -11,46 +11,56 @@
           v-bind:rules="rules.required"
           label="License Number"
         ></v-text-field>
+
         <v-text-field
           v-model="newDriver.licenseState"
           v-bind:rules="rules.required"
           label="License State"
         ></v-text-field>
+
         <v-text-field
           v-model="newDriver.vehicleType"
           v-bind:rules="rules.required"
           label="Vehicle Type"
         ></v-text-field>
+
         <v-text-field
           v-model="newDriver.vehicleMake"
           v-bind:rules="rules.required"
           label="Vehicle Make"
         ></v-text-field>
+
         <v-text-field
           v-model="newDriver.vehicleModel"
           v-bind:rules="rules.required"
           label="Vehicle Model"
         ></v-text-field>
+
         <v-text-field
           v-model="newDriver.vehicleColor"
           v-bind:rules="rules.required"
           label="Vehicle Color"
         ></v-text-field>
-        <number-input
+
+        <v-text-field
           v-model="newDriver.vehcileCapacity"
           v-bind:rules="rules.required"
           label="Vehicle Capacity"
-        ></number-input>
-        <number-input
+        ></v-text-field>
+
+        <v-text-field
           v-model="newDriver.mpg"
           v-bind:rules="rules.required"
           label="Vehicle Gas Mileage (mpg)"
-        ></number-input>
+        ></v-text-field>
+
         <v-text-field
           v-model="newDriver.licensePlate"
           v-bind:rules="rules.required"
           label="Vehicle License Plate"
-        ></v-text-field>        <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
+        ></v-text-field>        
+        
+        <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
           >Submit
         </v-btn>
       </v-form>
@@ -100,8 +110,8 @@ export default {
         vehicleMake: "",
         vehicleModel: "",
         vehicleColor: "",
-        vehicleCapacity: 0,
-        mpg: 0,
+        vehicleCapacity: "",
+        mpg: "",
         licensePlate: "",
       },
 
@@ -121,12 +131,6 @@ export default {
       // containing an error message indicating why the field doesn't pass validation.
       rules: {
         required: [(val) => val.length > 0 || "Required"],
-        vehicleCapacity: [
-          (val) => val > 0 || "Vehicle capacity must be greater than 0",
-        ],
-        mpg: [
-          (val) => val > 0 || "mpg must be greater than 0",
-        ],
       },
     };
   },
@@ -134,24 +138,22 @@ export default {
     // Invoked when the user clicks the 'Submit' button.
     handleSubmit: function () {
       // Haven't been successful yet.
+      console.log("got here");
       this.driverCreated = false;
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/vehicle", {
-            type: this.newDriver.vehicleType,
-            make: this.newDriver.vehicleMake,
-            model: this.newDriver.vehicleModel,
-            color: this.newDriver.vehicleColor,
-            capacity: this.newDriver.vehicleCapacity,
-            mpg: this.newDriver.mpg,
-            licenseState: this.newDriver.licenseState,
-            licensePlate: this.newDriver.licensePlate,
-        })
         .post("/driver", {
           userId: this.$store.state.currentAccount.id,
           licenseNumber: this.newDriver.licenseNumber,
           licenseState: this.newDriver.licenseState,
+          licensePlate: this.newDriver.licensePlate,
+          type: this.newDriver.vehicleType,
+          make: this.newDriver.vehicleMake,
+          model: this.newDriver.vehicleModel,
+          color: this.newDriver.vehicleColor,
+          capacity: this.newDriver.vehicleCapacity,
+          mpg: this.newDriver.mpg,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
