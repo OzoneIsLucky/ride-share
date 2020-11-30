@@ -102,6 +102,50 @@ async function init() {
     },
 
     {
+      method: "POST",
+      path: "/rides",
+      config: {
+        description: "Add a ride",
+        validate: {
+          payload: Joi.object({
+            date: Joi.date().required(),
+            time: Joi.date().required(),
+            distance: Joi.number().required(),
+            fuelPrice: Joi.number().required(),
+            fee: Joi.number().required(),
+            vehicleId: Joi.number().required(),
+            fromLocationId: Joi.number().required(),
+            toLocationId: Joi.number().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const newRide = await Ride.query().insert({
+          date: request.payload.date,
+          time: request.payload.time,
+          distance: request.payload.distance,
+          fuelPrice: request.payload.fuelPrice,
+          fee: request.payload.fee,
+          vehicleId: request.payload.vehicleId,
+          fromLocationId: request.payload.fromLocationId,
+          toLocationId: request.payload.toLocationId,
+        });
+
+        if (newRide) {
+          return {
+            ok: true,
+            msge: `Created Ride`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create Ride`,
+          };
+        }
+      },
+    },
+
+    {
       method: "GET",
       path: "/accounts",
       config: {
@@ -302,7 +346,8 @@ async function init() {
           };
         }
 
-        
+        await console.log(request.payload);
+
         const newDriver = await Driver.query().insert({
           userId: request.payload.userId,
           licenseNumber: request.payload.licenseNumber,
@@ -313,15 +358,14 @@ async function init() {
           model: request.payload.model,
           color: request.payload.color,
           vehicleTypeId: type.id,
-          capacity: request.payload.capacity,
-          mpg: request.payload.mpg,
+          capacity: parseInt(request.payload.capacity, 10),
+          mpg: parseFloat(request.payload.mpg),
           licenseState: request.payload.licenseState,
           licensePlate: request.payload.licensePlate,
         })
-        const num = await Authorization.query().resultSize()
         const authorize = await Authorization.query().insert({
-          driverId: num + 1,
-          vehicleId: num + 1,
+          driverId: newDriver.id,
+          vehicleId: newVehicle.id,
         })
 
         if (newVehicle) {

@@ -61,8 +61,8 @@ export default {
       this.accounts = response.data.map(account => ({
         id: account.id,
         email: account.email,
-        firstName: account.first_name,
-        lastName: account.last_name
+        firstName: account.firstName,
+        lastName: account.lastName
       }));
     });
   },

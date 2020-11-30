@@ -41,6 +41,9 @@
         <v-list-item v-bind:to="{ name: 'reset-password' }">
           <v-list-item-title>Reset Password</v-list-item-title>
         </v-list-item>
+        <v-list-item v-bind:to="{ name: 'admin' }">
+          <v-list-item-title>Admin</v-list-item-title>
+        </v-list-item>
 
         <v-divider></v-divider>
 

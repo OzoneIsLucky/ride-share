@@ -1,61 +1,55 @@
 <template>
   <v-container>
     <div>
-      <h4 class="display-1">Become a Driver</h4>
+      <h4 class="display-1">Add a Ride</h4>
 
-      <instructions details="Input Information on Your Vehicle and Licensure." />
+      <instructions details="Please fill in all fields." />
 
       <v-form v-model="valid">
         <v-text-field
-          v-model="newDriver.licenseNumber"
+          v-model="newRide.date"
           v-bind:rules="rules.required"
-          label="License Number"
+          label="Date"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.licenseState"
+          v-model="newRide.distance"
           v-bind:rules="rules.required"
-          label="License State"
+          label="Distance"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.vehicleType"
+          v-model="newRide.vehicleMake"
           v-bind:rules="rules.required"
-          label="Vehicle Type"
+          label="fuelPrice"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.vehicleMake"
-          v-bind:rules="rules.required"
-          label="Vehicle Make"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="newDriver.vehicleModel"
+          v-model="newRide.vehicleModel"
           v-bind:rules="rules.required"
           label="Vehicle Model"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.vehicleColor"
+          v-model="newRide.vehicleColor"
           v-bind:rules="rules.required"
           label="Vehicle Color"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.vehicleCapacity"
+          v-model="newRide.vehcileCapacity"
           v-bind:rules="rules.required"
           label="Vehicle Capacity"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.mpg"
+          v-model="newRide.mpg"
           v-bind:rules="rules.required"
           label="Vehicle Gas Mileage (mpg)"
         ></v-text-field>
 
         <v-text-field
-          v-model="newDriver.licensePlate"
+          v-model="newRide.licensePlate"
           v-bind:rules="rules.required"
           label="Vehicle License Plate"
         ></v-text-field>        
@@ -103,7 +97,7 @@ export default {
       valid: false, // Are all the fields in the form valid?
 
       // Object to collect driver data
-      newDriver: {
+      newRide: {
         licenseNumber: "",
         licenseState: "",
         vehicleType: "",
@@ -139,21 +133,19 @@ export default {
     handleSubmit: function () {
       // Haven't been successful yet.
       console.log("got here");
-      this.driverCreated = false;
+      this.rideCreated = false;
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/driver", {
-          userId: this.$store.state.currentAccount.id,
-          licenseNumber: this.newDriver.licenseNumber,
-          licenseState: this.newDriver.licenseState,
-          licensePlate: this.newDriver.licensePlate,
-          type: this.newDriver.vehicleType,
-          make: this.newDriver.vehicleMake,
-          model: this.newDriver.vehicleModel,
-          color: this.newDriver.vehicleColor,
-          capacity: this.newDriver.vehicleCapacity,
-          mpg: this.newDriver.mpg,
+        .post("/rides", {
+          date: this.newRide.licenseNumber,
+          time: this.newRide.licenseState,
+          distance: this.newRide.licensePlate,
+          fuelPrice: this.newRide.vehicleType,
+          fee: this.newRide.vehicleMake,
+          vehicleId: this.newRide.vehicleModel,
+          fromLocationId: this.newRide.vehicleColor,
+          toLocationId: this.newRide.vehicleCapacity,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
