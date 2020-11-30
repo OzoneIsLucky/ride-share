@@ -20,3 +20,5 @@ new Vue({
   vuetify,
   render: h => h(App)
 });
+
+Vue.use(require('vue-moment'));

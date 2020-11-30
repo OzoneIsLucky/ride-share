@@ -10,8 +10,8 @@
       >
         <template v-slot:item="{ item }">
           <tr v-bind:class="itemClass(item)">
-            <td>{{ item.date }}</td>
-            <td>{{ item.time }}</td>
+            <td>{{ item.date | moment("MM-DD-YY") }}</td>
+            <td>{{ item.time | moment("h:mm a") }}</td>
             <td>{{ item.distance }}</td>
             <td>{{ item.fuelPrice }}</td>
             <td>{{ item.fee }}</td>
@@ -68,6 +68,7 @@ export default {
   },
 
   mounted: function() {
+    console.log("got here");
     this.$axios.get("/rides").then(response => {
       this.rides = response.data.map(ride => ({
         date: ride.date,
@@ -90,7 +91,7 @@ export default {
     },
 
     // Calculate the CSS class for an item
-    itemClass(item) {
+    itemClass() {
       //pass
     },
 
@@ -106,11 +107,11 @@ export default {
       });
     },
 
-    // Delete an account.
+    // Delete a ride.
     deleteRide(item) {
       this.$axios.delete(`/rides/${item.id}`).then(response => {
         if (response.data.ok) {
-          // The delete operation worked on the server; delete the local account
+          // The delete operation worked on the server; delete the local ride
           // by filtering the deleted account from the list of rides.
           this.rides = this.rides.filter(
             ride => ride.id !== item.id
