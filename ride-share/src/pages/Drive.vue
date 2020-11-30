@@ -12,11 +12,12 @@
           label="License Number"
         ></v-text-field>
 
-        <v-text-field
+        <v-select
           v-model="newDriver.licenseState"
           v-bind:rules="rules.required"
           label="License State"
-        ></v-text-field>
+          :items="licenseState"
+        ></v-select>
 
         <v-text-field
           v-model="newDriver.vehicleType"
@@ -93,6 +94,14 @@
 <script>
 import Instructions from "../components/Instructions.vue";
 
+new Vue({
+  el: '#app',
+  vuetify: new Vuetify(),
+  data: () => ({
+    items: ["WA","WI","IN","IL","OH","MI"],
+  }),
+})
+
 export default {
   name: "DriverPage",
   components: {
@@ -138,7 +147,7 @@ export default {
     // Invoked when the user clicks the 'Submit' button.
     handleSubmit: function () {
       // Haven't been successful yet.
-      console.log("got here");
+      console.log("got here" + this.newDriver.vehicleCapacity);
       this.driverCreated = false;
 
       // Post the content of the form to the Hapi server.

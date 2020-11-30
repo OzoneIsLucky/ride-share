@@ -12,6 +12,7 @@ import Drivers from "./pages/Drivers.vue";
 import Drive from "./pages/Drive.vue";
 import Ride from "./pages/Ride.vue";
 import Admin from "./pages/Admin.vue";
+import AddRide from "./pages/AddRide.vue"
 
 Vue.use(Router);
 
@@ -30,5 +31,6 @@ export default new Router({
     { name: "become-driver", path: "/drive", component: Drive },
     { name: "ride", path: "/ride", component: Ride},
     { name: "admin", path: "/admin", component: Admin},
+    { name: "add-ride", path: "/add-ride", component: AddRide},
   ]
 });

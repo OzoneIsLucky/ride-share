@@ -337,7 +337,8 @@ async function init() {
       },
       handler: async (request, h) => {
         const type = await VehicleType.query()
-          .where('type', request.payload.type)
+          .where("type", request.payload.type)
+          .first()
 
         if(!type) {
           return {
@@ -346,7 +347,7 @@ async function init() {
           };
         }
 
-        await console.log(request.payload);
+        await console.log(type);
 
         const newDriver = await Driver.query().insert({
           userId: request.payload.userId,
