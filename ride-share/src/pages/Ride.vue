@@ -29,7 +29,7 @@
       >
       <template v-slot:item="{ item }">
         <tr v-bind:class="itemClass(item)">
-          <td>{{ item.passengerId }}</td>
+          <td>{{ item.firstName }}</td>
 
         </tr>
       </template>
@@ -98,7 +98,8 @@ export default {
     this.$axios.get("/passengers").then(response => {
       this.passengers = response.data.map(passenger => ({
         passengerId: passenger.passengerId,
-        rideId: passenger.rideId
+        rideId: passenger.rideId,
+        firstName: passenger.User.firstName,
       }));
 
       this.passengers = this.passengers.filter(

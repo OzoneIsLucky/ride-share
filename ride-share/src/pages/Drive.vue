@@ -138,11 +138,6 @@ export default {
 
       // Post the content of the form to the Hapi server.
       this.$axios
-        .post("/driver", {
-          userId: this.$store.state.currentAccount.id,
-          licenseNumber: this.newDriver.licenseNumber,
-          licenseState: this.newDriver.licenseState,
-        })
         .post("/vehicle", {
             type: this.newDriver.vehicleType,
             make: this.newDriver.vehicleMake,
@@ -152,6 +147,11 @@ export default {
             mpg: this.newDriver.mpg,
             licenseState: this.newDriver.licenseState,
             licensePlate: this.newDriver.licensePlate,
+        })
+        .post("/driver", {
+          userId: this.$store.state.currentAccount.id,
+          licenseNumber: this.newDriver.licenseNumber,
+          licenseState: this.newDriver.licenseState,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
@@ -177,7 +177,7 @@ export default {
     // and navigate to the home page.
     hideDialog: function () {
       this.dialogVisible = false;
-      if (this.accountCreated) {
+      if (this.driverCreated) {
         // Only navigate away from the become driver page if we were successful.
         this.$router.push({ name: "home-page" });
       }

@@ -238,7 +238,7 @@ async function init() {
         description: "Get all passengers",
       },
       handler: (request, h) => {
-        return Passenger.query();
+        return Passenger.query().withGraphFetched('User');
       },
     },
     
@@ -301,7 +301,7 @@ async function init() {
         if (newDriver) {
           return {
             ok: true,
-            msge: `Congradulations!`,
+            msge: `Congradulations! Driver created for user with id '${request.payload.userId}'`,
           };
         } else {
           return {
@@ -319,16 +319,31 @@ async function init() {
         description: "Create a Vehicle",
       },
       handler: async (request, h) => {
+        const typeExists = await Vehicle_Type.query()
+          .where('type', request.payload.type)
+
+        if(!typeExists) {
+          return {
+            ok: false,
+            msge: `Vehicle type not accepted`,
+          };
+        }
+
+        const id = await Authorization.query().max('driverId')
+        const authorize = await Authorization.query().insert({
+          driverId: id + 1,
+          vehicleId: id + 1,
+        })
         const newVehicle = await Vehicle.query().insert({
-          userId: request.payload.userId,
+          vehicleTypeId: request.payload.userId,
           licenseNumber: request.payload.licenseNumber,
           licenseState: request.payload.licenseState,
         })
 
-        if (newDriver) {
+        if (newVehicle) {
           return {
             ok: true,
-            msge: `Congratulations!`,
+            msge: `Congratulations! Vehicle created for user with id '${request.payload.userId}'`,
           };
         } else {
           return {
