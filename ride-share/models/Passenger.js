@@ -4,6 +4,11 @@ class Passenger extends Model {
   static get tableName() {
     return "Passenger";
   }
+
+  static get idColumn() {
+    return ["passengerId", "rideId"];
+  }
+
   static get relationMappings() {
     const Ride = require("./Ride.js");
     const User = require("./User.js");

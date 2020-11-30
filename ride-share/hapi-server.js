@@ -179,7 +179,7 @@ async function init() {
       },
       handler: async (request, h) => {
         const newPassenger = await Passenger.query().insert({
-          userId: request.payload.userId,
+          passengerId: request.payload.userId,
           rideId: request.params.id,
         });
 
