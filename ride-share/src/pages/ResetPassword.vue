@@ -11,6 +11,7 @@
                 v-model="email"
                 v-bind:rules="rules.email"
                 label="Email"
+                id="email"
                 name="email"
                 prepend-icon="mdi-email"
                 type="text"
@@ -46,7 +47,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn v-on:click="resetPassword(this.$axios.query().select('id').where('email', ))" color="primary">Reset Password</v-btn>
+          <v-btn v-on:click="resetPassword" color="primary">Reset Password</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -83,9 +84,9 @@ export default {
   },
 
   methods: {
-    resetPassword(id) {
+    resetPassword() {
       this.$axios
-          .post(`/accounts/${id}`, {
+          .update(`/accounts/${this.$axios.query().select('id').where('email', document.getElementById("email").value)}`, {
             password: this.password,
           })
           .then((result) => {

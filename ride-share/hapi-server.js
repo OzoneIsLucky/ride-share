@@ -138,10 +138,10 @@ async function init() {
     },
 
     {
-      method: "PATCH",
+      method: "UPDATE",
       path: "/accounts/{id}",
       config: {
-        description: "Update an account",
+        description: "Update a password",
       },
       handler: (request, h) => {
         return User.query()
