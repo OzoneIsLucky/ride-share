@@ -238,7 +238,7 @@ async function init() {
         description: "Get all passengers",
       },
       handler: (request, h) => {
-        return Passenger.query();
+        return Passenger.query().withGraphFetched("User");
       },
     },
     
