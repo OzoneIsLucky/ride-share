@@ -138,17 +138,25 @@ async function init() {
     },
 
     {
-      method: "UPDATE",
+      method: "PATCH",
       path: "/accounts/{id}",
       config: {
         description: "Update a password",
       },
-      handler: (request, h) => {
-        return User.query()
-          .findById(request.params.id)
-          .patch({
-            password: request.params.password,
-          });
+      handler: async (request, h) => {
+        const account = await User.query()
+          .where("email", request.payload.email)
+          .first();
+        if (
+          account &&
+          (await account.verifyPassword(request.payload.password))
+        ) {
+          return User.query()
+            .findById(request.params.id)
+            .patch({
+              password: request.params.password,
+            });
+        }
       },
     },
 
@@ -160,6 +168,32 @@ async function init() {
       },
       handler: (request, h) => {
         return Ride.query();
+      },
+    },
+
+    {
+      method: "POST",
+      path: "/rides/{id}",
+      config: {
+        description: "Join a ride",
+      },
+      handler: async (request, h) => {
+        const newPassenger = await Passenger.query().insert({
+          userId: request.payload.userId,
+          rideId: request.params.id,
+        });
+
+        if (newPassenger) {
+          return {
+            ok: true,
+            msge: `Joined ride '${request.params.id}'!`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't join ride with id '${request.params.id}'`,
+          };
+        }
       },
     },
 

@@ -71,6 +71,7 @@ export default {
     console.log("got here");
     this.$axios.get("/rides").then(response => {
       this.rides = response.data.map(ride => ({
+        id: ride.id,
         date: ride.date,
         time: ride.time,
         distance: ride.distance,
@@ -96,15 +97,22 @@ export default {
     },
 
     joinRide(item) {
-      this.$axios.patch(`/rides/${item.id}`).then(response => {
-        if (response.data.ok) {
-          // The delete operation worked on the server; delete the local account
-          // by filtering the deleted account from the list of rides.
-          this.rides = this.rides.filter(
-            account => account.id !== item.id
-          );
-        }
-      });
+
+      this.$axios
+        .post(`/rides/${item.id}`, {
+          userId: this.$store.state.currentAccount.id
+        })
+        .then((result) => {
+          // Based on whether things worked or not, show the
+          // appropriate dialog.
+          if (result.data.ok) {
+            this.showDialog("Success", result.data.msge);
+            this.accountCreated = true;
+          } else {
+            this.showDialog("Sorry", result.data.msge);
+          }
+        })
+        .catch((err) => this.showDialog("Failed", err));
     },
 
     // Delete a ride.
