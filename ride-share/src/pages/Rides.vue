@@ -109,12 +109,7 @@ export default {
         .then((result) => {
           // Based on whether things worked or not, show the
           // appropriate dialog.
-          if (result.data.ok) {
-            console.log(result.data.msge);
-            this.accountCreated = true;
-          } else {
-            console.log(result.data.msge);
-          }
+          console.log(result.data.msge);
         })
         .catch((err) => console.log(err));
     },
