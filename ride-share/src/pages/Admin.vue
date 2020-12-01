@@ -49,6 +49,7 @@
         </template>
       </v-data-table>
       <br>
+      <v-btn v-on:click="addRide">Add Ride</v-btn>
 
       <v-snackbar v-model="snackbar.show">
         {{ snackbar.text }}
@@ -130,6 +131,10 @@ export default {
     // Calculate the CSS class for an item
     itemClass() {
       //pass
+    },
+
+    addRide() {
+      this.$router.push({ name: "add-ride" });
     },
 
     // Delete an account.

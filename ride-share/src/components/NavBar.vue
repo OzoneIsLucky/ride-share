@@ -26,9 +26,6 @@
       </template>
 
       <v-list>
-        <v-list-item v-bind:to="{ name: 'accounts' }">
-          <v-list-item-title>Accounts</v-list-item-title>
-        </v-list-item>
         <v-list-item v-bind:to="{ name: 'rides' }">
           <v-list-item-title>Rides</v-list-item-title>
         </v-list-item>

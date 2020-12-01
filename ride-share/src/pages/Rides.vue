@@ -110,13 +110,13 @@ export default {
           // Based on whether things worked or not, show the
           // appropriate dialog.
           if (result.data.ok) {
-            this.showDialog("Success", result.data.msge);
+            console.log(result.data.msge);
             this.accountCreated = true;
           } else {
-            this.showDialog("Sorry", result.data.msge);
+            console.log(result.data.msge);
           }
         })
-        .catch((err) => this.showDialog("Failed", err));
+        .catch((err) => console.log(err));
     },
 
     // Delete a ride.

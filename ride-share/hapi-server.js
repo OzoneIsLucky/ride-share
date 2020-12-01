@@ -233,6 +233,18 @@ async function init() {
         description: "Join a ride",
       },
       handler: async (request, h) => {
+        const passengers = await Passenger.query()
+          .where('rideId',request.params.id);
+        
+        let capacity = await Ride.query().withGraphFetched("Vehicle").findById(request.params.id).first();
+
+        if (passengers.length >= capacity.Vehicle.capacity) {
+          return {
+            ok: false,
+            msge: "That ride is full"
+          }
+        }
+
         const newPassenger = await Passenger.query().insert({
           passengerId: request.payload.userId,
           rideId: request.params.id,

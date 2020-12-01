@@ -138,7 +138,7 @@ export default {
             this.showDialog("Sorry", result.data.msge);
           }
         })
-        .catch((err) => this.showDialog("Failed", err));
+        .catch((err) => console.log(err));
     },
 
     // Delete a ride.
