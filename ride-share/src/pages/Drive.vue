@@ -12,12 +12,11 @@
           label="License Number"
         ></v-text-field>
 
-        <v-select
+        <v-text-field
           v-model="newDriver.licenseState"
           v-bind:rules="rules.required"
           label="License State"
-          :items="licenseState"
-        ></v-select>
+        ></v-text-field>
 
         <v-text-field
           v-model="newDriver.vehicleType"
@@ -93,14 +92,6 @@
 
 <script>
 import Instructions from "../components/Instructions.vue";
-
-new Vue({
-  el: '#app',
-  vuetify: new Vuetify(),
-  data: () => ({
-    items: ["WA","WI","IN","IL","OH","MI"],
-  }),
-})
 
 export default {
   name: "DriverPage",

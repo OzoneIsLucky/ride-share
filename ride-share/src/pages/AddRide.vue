@@ -6,10 +6,17 @@
       <instructions details="Please fill in all fields." />
 
       <v-form v-model="valid">
+
         <v-text-field
           v-model="newRide.date"
           v-bind:rules="rules.required"
           label="Date"
+        ></v-text-field>
+
+        <v-text-field
+          v-model="newRide.time"
+          v-bind:rules="rules.required"
+          label="Time"
         ></v-text-field>
 
         <v-text-field
@@ -19,40 +26,34 @@
         ></v-text-field>
 
         <v-text-field
-          v-model="newRide.vehicleMake"
+          v-model="newRide.fuelPrice"
           v-bind:rules="rules.required"
           label="fuelPrice"
         ></v-text-field>
 
         <v-text-field
-          v-model="newRide.vehicleModel"
+          v-model="newRide.fee"
           v-bind:rules="rules.required"
-          label="Vehicle Model"
+          label="Fee"
         ></v-text-field>
 
         <v-text-field
-          v-model="newRide.vehicleColor"
+          v-model="newRide.vehicleId"
           v-bind:rules="rules.required"
-          label="Vehicle Color"
+          label="Vehicle ID"
         ></v-text-field>
 
         <v-text-field
-          v-model="newRide.vehcileCapacity"
+          v-model="newRide.fromLocationId"
           v-bind:rules="rules.required"
-          label="Vehicle Capacity"
+          label="From Location ID"
         ></v-text-field>
 
         <v-text-field
-          v-model="newRide.mpg"
+          v-model="newRide.toLocationId"
           v-bind:rules="rules.required"
-          label="Vehicle Gas Mileage (mpg)"
-        ></v-text-field>
-
-        <v-text-field
-          v-model="newRide.licensePlate"
-          v-bind:rules="rules.required"
-          label="Vehicle License Plate"
-        ></v-text-field>        
+          label="To Locaiton ID"
+        ></v-text-field>       
         
         <v-btn v-bind:disabled="!valid" v-on:click="handleSubmit"
           >Submit
@@ -90,7 +91,7 @@ import Instructions from "../components/Instructions.vue";
 export default {
   name: "DriverPage",
   components: {
-    Instructions, // Use the Instructions component we just imported
+    Instructions,// Use the Instructions component we just imported
   },
   data: function () {
     return {
@@ -98,15 +99,14 @@ export default {
 
       // Object to collect driver data
       newRide: {
-        licenseNumber: "",
-        licenseState: "",
-        vehicleType: "",
-        vehicleMake: "",
-        vehicleModel: "",
-        vehicleColor: "",
-        vehicleCapacity: "",
-        mpg: "",
-        licensePlate: "",
+        date: "",
+        time: "",
+        distance: "",
+        fuelPrice: "",
+        fee: "",
+        vehicleId: "",
+        fromLocationId: "",
+        toLocationId: "",
       },
 
       // Was a driver created successfully?
@@ -138,14 +138,14 @@ export default {
       // Post the content of the form to the Hapi server.
       this.$axios
         .post("/rides", {
-          date: this.newRide.licenseNumber,
-          time: this.newRide.licenseState,
-          distance: this.newRide.licensePlate,
-          fuelPrice: this.newRide.vehicleType,
-          fee: this.newRide.vehicleMake,
-          vehicleId: this.newRide.vehicleModel,
-          fromLocationId: this.newRide.vehicleColor,
-          toLocationId: this.newRide.vehicleCapacity,
+          date: this.newRide.date,
+          time: this.newRide.time,
+          distance: this.newRide.distance,
+          fuelPrice: this.newRide.fuelPrice,
+          fee: this.newRide.fee,
+          vehicleId: this.newRide.vehicleId,
+          fromLocationId: this.newRide.fromLocationId,
+          toLocationId: this.newRide.toLocationId,
         })
         .then((result) => {
           // Based on whether things worked or not, show the
